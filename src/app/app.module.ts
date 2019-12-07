@@ -11,6 +11,9 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { ChartComponent } from './charts/chart.component';
 import { SearchResultsComponent } from './search-results/search-results.component';
 import { MaterialModule } from './material.module';
+import { AlertDialogComponent } from './alert-dialog/alert-dialog.component';
+import { WithDrawComponent } from './with-draw/with-draw.component';
+import { MatDialogModule } from '@angular/material';
 
 
 @NgModule({
@@ -18,7 +21,9 @@ import { MaterialModule } from './material.module';
     AppComponent,
     MainNavComponent,
     ChartComponent,
-    SearchResultsComponent
+    SearchResultsComponent,
+    AlertDialogComponent,
+    WithDrawComponent
   ],
   imports: [
     BrowserModule,
@@ -28,7 +33,9 @@ import { MaterialModule } from './material.module';
     LayoutModule,
     ChartsModule,
     MaterialModule,
+    MatDialogModule
   ],
+  entryComponents: [AlertDialogComponent],
   providers: [],
   bootstrap: [AppComponent]
 })

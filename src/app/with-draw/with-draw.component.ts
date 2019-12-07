@@ -1,28 +1,29 @@
-import { Component, OnInit, ViewChild, Inject } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { AlertDialogComponent } from '../alert-dialog/alert-dialog.component';
- 
-
 @Component({
-    selector: 'app-searchResults',
-    templateUrl: './search-results.component.html',
-    styleUrls: ['./search-results.component.css'],
-    animations: [
-        trigger('detailExpand', [
-          state('collapsed', style({height: '0px', minHeight: '0', display: 'none'})),
-          state('expanded', style({height: '*'})),
-          transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-        ]),
-      ],
+  selector: 'app-with-draw',
+  templateUrl: './with-draw.component.html',
+  styleUrls: ['./with-draw.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0', display: 'none'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
-export class SearchResultsComponent   implements OnInit{
+export class WithDrawComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   dataSource = new MatTableDataSource<any>();
   columnsToDisplay = ['User', 'Date', 'Status', 'Actions'];
   expandedElement: any;
+  isPending: boolean;
+  isCompleted: boolean=true;
+  isRevert: boolean= true;
   constructor(public dialog: MatDialog) {}
   ngOnInit(){
     this.dataSource.data=ELEMENT_DATA;
@@ -36,11 +37,27 @@ export class SearchResultsComponent   implements OnInit{
     // const index = this.dataSource.data.indexOf(foundElement);
     // this.dataSource.data[index].show = !this.dataSource.data[index].show;
   }
-  openDialog() {
+  openDialog(value) {debugger
+    let message;
+    if(value=='pending'){
+      message="are you want to change status pending to completed"
+      this.isCompleted= false;
+      this.isPending= true;
+    }
+    else if(value=='completed'){
+      message="are you want to change status to completed";
+      this.isRevert= false;
+      this.isCompleted=true;
+      
+    }
+    else if(value=='revert'){
+      message="are you want to change status back to completed"
      
+    }
+
       let dialogRef = this.dialog.open(AlertDialogComponent, {
         width: '50%',
-         data:'Are you wish to confirm the user to certify'
+        data: message
       });
   
       dialogRef.afterClosed().subscribe(result => { 

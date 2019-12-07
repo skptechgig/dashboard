@@ -24,8 +24,9 @@
   <ng-container matColumnDef="Actions">
     <th mat-header-cell *matHeaderCellDef> Actions </th>
     <td mat-cell *matCellDef="let element">  
-      <button (click)="openDialog();event.stopPropagation()">Certify</button>
-      <button (click)="openDialog();event.stopPropagation()">Reject</button>
+      <button class="btn" (click)="openDialog('pending')" [disabled]=isPending>Pending</button>
+      <button class="btn" (click)="openDialog('completed')" [disabled]=isCompleted>Completed</button>
+      <button class="btn" (click)="openDialog('revert')" [disabled]=isRevert>Revert Back</button>
        </td>
   </ng-container>
   <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
